@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Box, TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import GoBack from "../components/GoBack";
+import { ListProps } from "../components/List";
 
-type WriterProps = {
-    onAddList: (title: string, content: string) => void;
+type UpdateProps = {
+    item: ListProps[];
+    onUpdateList: (id: string|undefined, value: string, content: string) => void;
 }
 
-const Write:React.FC<WriterProps> = ({ onAddList }: WriterProps) => {
-    const [value, setValue] = useState<string>("");
-    const [content, setContent] = useState<string>("");
+const Update:React.FC<UpdateProps> = ({ item, onUpdateList }: UpdateProps) => {
+    const { itemId } = useParams<string>();
+    const [value, setValue] = useState<string>(item.filter(i=>i.id === itemId)[0].title);
+    const [content, setContent] = useState<string>(item.filter(i=>i.id === itemId)[0].content);
 
     return(
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
@@ -33,7 +36,7 @@ const Write:React.FC<WriterProps> = ({ onAddList }: WriterProps) => {
             <Box m={2} pt={3}>
                 <Link to="/" style={{textDecoration : 'none'}}>
                     <Button size="large" onClick={(e)=>{
-                        onAddList(value, content);
+                        onUpdateList(itemId, value, content);
                         setValue("");
                         setContent("");
                     }}>추가</Button>
@@ -43,4 +46,4 @@ const Write:React.FC<WriterProps> = ({ onAddList }: WriterProps) => {
     );
 }
 
-export default Write;
+export default Update;
