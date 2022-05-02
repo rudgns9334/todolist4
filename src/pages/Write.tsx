@@ -11,6 +11,7 @@ const Write:React.FC<WriterProps> = ({ onAddList }: WriterProps) => {
     const [value, setValue] = useState<string>("");
     const [content, setContent] = useState<string>("");
 
+    
     return(
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
             <GoBack />
